@@ -7,12 +7,12 @@
 [![PyPI - Version](https://img.shields.io/pypi/v/pptx2txt2)](https://pypi.org/project/pptx2txt2/)
 [![Python Version from PEP 621 TOML](https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2FGitToby%2Fpptx2txt2%2Fmaster%2Fpyproject.toml)](https://pypi.org/project/pptx2txt2/)
 
-My personal replacement for [pptx2txt](https://github.com/shakiyam/pptx2txt). 
+My personal replacement for [pptx2txt](https://github.com/shakiyam/pptx2txt).
 
 It's intended to be very simple and provide some utilities to extract content similar to the original lib.
 
 Also see
-    - [docx2txt2](https://github.com/GitToby/docx2txt2) for docx conversion
+- [docx2txt2](https://github.com/GitToby/docx2txt2) for docx conversion
 
 ## Usage
 
