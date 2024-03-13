@@ -1,0 +1,43 @@
+[project]
+name = "pptx2txt2"
+dynamic = ["version"]
+description = "Parse .pptx files to strings in pure python. A follow up to pptx2txt."
+authors = [
+    { name = "Toby Devlin", email = "toby@tobydevlin.com" },
+]
+
+requires-python = ">=3.8"
+readme = "README.md"
+license = { text = "MIT" }
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.1.1",
+    "black>=24.2.0",
+    "ruff>=0.3.2",
+    "mypy>=1.9.0",
+    "pytest-cov>=4.1.0",
+    "pre-commit>=3.5.0",
+    "pptx2txt>=0.8",
+    "pytest-benchmark>=4.0.0",
+    "build>=1.1.1",
+    "setuptools-scm>=8.0.4",
+]
+
+[build-system]
+requires = [
+    "setuptools>=61",
+    "setuptools-scm>=8.0",
+    "wheel"
+]
+build-backend = "setuptools.build_meta"
+
+[tool.pdm]
+distribution = true
+
+[tool.pytest.ini_options]
+pythonpath = "src"
+addopts = "-ra"
+
+[tool.mypy]
+python_version = "3.8"
