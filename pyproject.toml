@@ -1,7 +1,7 @@
 [project]
 name = "pptx2txt2"
 dynamic = ["version"]
-description = "Parse .pptx and .odf files to strings in pure python. A follow up to pptx2txt."
+description = "Extract text from .pptx and .odp files to strings in pure python."
 authors = [
     { name = "Toby Devlin", email = "toby@tobydevlin.com" },
 ]

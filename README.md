@@ -1,5 +1,7 @@
 # pptx2txt2
 
+> Extract text from .pptx and .odp files to strings in pure python.
+
 [![codecov](https://codecov.io/gh/GitToby/pptx2txt2/graph/badge.svg?token=OW9957N278)](https://codecov.io/gh/GitToby/pptx2txt2)
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/GitToby/pptx2txt2/lint-and-test.yaml)](https://github.com/GitToby/pptx2txt2/actions/workflows/lint-and-test.yaml)
 [![GitHub file size in bytes](https://img.shields.io/github/size/GitToby/pptx2txt2/src%2Fpptx2txt2%2F__init__.py)](https://github.com/GitToby/pptx2txt2/blob/master/src/pptx2txt2/__init__.py)
@@ -11,8 +13,6 @@ My personal replacement for [pptx2txt](https://github.com/shakiyam/pptx2txt).
 
 It's intended to be very simple and provide some utilities to extract content similar to the original lib.
 
-Also see
-- [docx2txt2](https://github.com/GitToby/docx2txt2) for docx conversion
 
 ## Usage
 
@@ -79,4 +79,12 @@ test_benchmark_pptx2txt2     2.4750  8.5452  2.6080  0.5790  2.5176  0.0503     
 GitHub Actions, python 3.12:
 
 ```
+------------------------------------------------ benchmark: 1 tests ------------------------------------------------
+Name (time in ms)               Min      Max    Mean  StdDev  Median     IQR  Outliers       OPS  Rounds  Iterations
+--------------------------------------------------------------------------------------------------------------------
+test_benchmark_pptx2txt2     3.5154  10.5635  3.6965  0.7599  3.5884  0.0409      5;17  270.5297     253           1
+--------------------------------------------------------------------------------------------------------------------
 ```
+
+### Also See
+- [docx2txt2](https://github.com/GitToby/docx2txt2) for docx conversion
