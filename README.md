@@ -1,6 +1,6 @@
 # pptx2txt2
 
-[![codecov](https://codecov.io/gh/GitToby/pptx2txt2/graph/badge.svg?token=12KF8ARYVZ)](https://codecov.io/gh/GitToby/pptx2txt2)
+[![codecov](https://codecov.io/gh/GitToby/pptx2txt2/graph/badge.svg?token=OW9957N278)](https://codecov.io/gh/GitToby/pptx2txt2)
 [![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/GitToby/pptx2txt2/lint-and-test.yaml)](https://github.com/GitToby/pptx2txt2/actions/workflows/lint-and-test.yaml)
 [![GitHub file size in bytes](https://img.shields.io/github/size/GitToby/pptx2txt2/src%2Fpptx2txt2%2F__init__.py)](https://github.com/GitToby/pptx2txt2/blob/master/src/pptx2txt2/__init__.py)
 [![PyPI - License](https://img.shields.io/pypi/l/pptx2txt2)](https://github.com/GitToby/pptx2txt2/blob/master/LICENSE.txt)
