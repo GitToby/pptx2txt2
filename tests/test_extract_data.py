@@ -7,12 +7,22 @@ import pptx2txt2
 
 RESOURCES_DIR = Path(__file__).parent / "resources"
 
-test_paths = [RESOURCES_DIR / "example_1.pptx", RESOURCES_DIR / "example_1.odp"]
+test_paths = [
+    RESOURCES_DIR / "example_1.pptx",
+    RESOURCES_DIR / "example_1.odp",
+    RESOURCES_DIR / "example_2.pptx",
+    RESOURCES_DIR / "example_2.odp",
+]
 
 
 @pytest.fixture
 def pptx_path():
     return test_paths[0]
+
+
+@pytest.fixture
+def pptx_path_2():
+    return test_paths[2]
 
 
 @pytest.fixture
@@ -58,6 +68,27 @@ def test_example_1_extract_text(pptx_path):
     assert all(ps_content in content for ps_content in per_slide_content.values())
 
 
+@pytest.mark.parametrize("path", test_paths[2:], ids=str)
+def test_example_2_extract_text_per_slide(path):
+    per_slide_content = pptx2txt2.extract_text_per_slide(path)
+
+    assert isinstance(per_slide_content, dict)
+    if ".odp" in str(path):
+        # opd files dont content separate by slide so we have only idx 0
+        assert len(per_slide_content) == 1
+        assert list(per_slide_content.keys()) == [0]
+        assert "CM1203 & CM1207 LECTURE 2" in per_slide_content[0]
+        assert "Notes for slide 22" in per_slide_content[0]
+        assert "Garbage Collection In Java" in per_slide_content[0]
+
+    elif ".pptx" in str(path):
+        # ppts have proper per slide content
+        assert len(per_slide_content) == 29
+        assert "CM1203 & CM1207 LECTURE 2" in per_slide_content[1]
+        assert "Notes for slide 22" in per_slide_content[22]
+        assert "Garbage Collection In Java" in per_slide_content[27]
+
+
 def test_example_odp_extract_text(pptx_path, odp_path):
     content_pptx = pptx2txt2.extract_text(pptx_path)
     content_odp = pptx2txt2.extract_text(odp_path)
@@ -74,7 +105,7 @@ def test_example_odp_extract_text(pptx_path, odp_path):
     assert content_odp == content_pptx
 
 
-@pytest.mark.parametrize("path", test_paths, ids=str)
+@pytest.mark.parametrize("path", test_paths[:2], ids=str)
 def test_example_1_extract_images(path):
     with TemporaryDirectory() as tempdir:
         images = pptx2txt2.extract_images(path, tempdir)

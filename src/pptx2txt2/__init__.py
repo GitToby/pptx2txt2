@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 import os
+import re
 import zipfile
 from collections import defaultdict
-from itertools import chain
 from pathlib import Path
 from typing import Any, DefaultDict, IO
 from xml.etree.ElementTree import XML
@@ -27,27 +27,34 @@ def extract_text_per_slide(
     text_content: DefaultDict[int, list[str]] = defaultdict(list)
 
     with zipfile.ZipFile(pptx_path, mode="r") as zip_:
-        namelist = sorted(zip_.namelist())
-        # These files are for both pptx
-        slides_files = (f for f in namelist if "slides" in f and f.endswith(".xml"))
-        notes_files = (f for f in namelist if "notesSlides" in f and f.endswith(".xml"))
-        slides_and_notes = zip(slides_files, notes_files)
+        namelist = zip_.namelist()
 
-        # these files are for odp formats
-        odp_files = ([f] for f in namelist if f == "content.xml")
+        # the namelist is unordered
+        # this sorted search provides an order for us to read in the data
+        # "notedSlides" come after "slides" etc.
+        for file_name in sorted(namelist, reverse=True):
+            # make sure we ge the correct slide
+            # patterns of relevant files:
+            # - .../slide<N>.xml
+            # - .../notesSlide<N>.xml
+            # - .../ content.xml (this case the slide_idx is '' mapping to 0)
+            search_res = re.search(
+                r".*(?P<type>slide|notesSlide|content)(?P<index>[0-9]*).xml$", file_name
+            )
+            if search_res:
+                slide_idx = search_res["index"]
+                slide_idx_ = int(slide_idx) if slide_idx else 0
 
-        # iterate over each sublist [[slide1, slide1_notes], [slide2, ...], ...]
-        for i, slide in enumerate(chain(slides_and_notes, odp_files)):
-            # iterate over each part of the sublist [slide1, slide1_notes]
-            slide_content = text_content[i + 1]
-            for part in slide:
-                part_data = zip_.read(part)
-                part_text = list(XML(part_data).itertext())
+                # iterate string parts and join
+                part_data = zip_.read(file_name)
                 # question, remove <#> for slide numbers?
-                slide_content.append(" ".join(part_text))
+                part_text = " ".join(XML(part_data).itertext())
+                text_content[slide_idx_].append(part_text)
 
     result = dict()
-    for idx, content in text_content.items():
+    # now we join each of the parts of the slides to one text block per slide
+    # reverse the slides because the initial sort was reversed
+    for idx, content in reversed(text_content.items()):
         # This removes multichar whitespace with 1 whitespace
         content_ = " ".join(" ".join(content).split())
 
